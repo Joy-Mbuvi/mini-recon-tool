@@ -3,8 +3,15 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ReconciliationSerializer
+from django.shortcuts import render
 import csv
 
+
+
+def home(request):
+    return render(request, 'index.html')
+
+    
 class reconciliation(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
