@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
 
-class Reconserializer(serilizers.Serializer):
-    internal_file=serializer.Filefield()
-    providers_file=serializers.Filefield()
+class Reconserializer(serializers.Serializer):
+    internal_file=serializers.FileField()
+    provider_file=serializers.FileField()

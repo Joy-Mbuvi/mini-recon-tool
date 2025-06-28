@@ -1,9 +1,7 @@
 from django.urls import path
-from .views import reconciliation  
-
+from .views import reconciliation, home  
 
 urlpatterns = [
-    path('', views.home, name='home'),
-
+    path('', home, name='home'),  
     path('api/reconcile/', reconciliation.as_view(), name='reconciliation'),
 ]

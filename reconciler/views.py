@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import ReconciliationSerializer
+from .serializers import Reconserializer
 from django.shortcuts import render
 import csv
 
@@ -11,12 +11,12 @@ import csv
 def home(request):
     return render(request, 'index.html')
 
-    
+
 class reconciliation(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
-        serializer = ReconciliationSerializer(data=request.data)
+        serializer = Reconserializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -44,9 +44,9 @@ class reconciliation(APIView):
                 continue
             transaction_ref = row[0]
             internal_transactions[transaction_ref] = {
-                'amount (KSH)': row[1],
+                'amount': row[1],
                 'status': row[2],
-                'time stamps': row[3]
+                'time_stamps': row[3]
             }
 
         provider_transactions = {}
@@ -55,9 +55,9 @@ class reconciliation(APIView):
                 continue
             transaction_ref = row[0]
             provider_transactions[transaction_ref] = {
-                'amount (KSH)': row[1],
+                'amount': row[1],
                 'status': row[2],
-                'time stamps': row[3]
+                'time_stamps': row[3]
             }
 
         matched = {}
@@ -70,10 +70,10 @@ class reconciliation(APIView):
                 provider_data = provider_transactions[ref]
                 if data != provider_data:
                     mismatches[ref] = {
-                        'internal_amount': data['amount (KSH)'],
-                        'provider_amount': provider_data['amount (KSH)'],
-                        'internal_status': data['status'],
-                        'provider_status': provider_data['status']
+                        'internal_amount': data.get('amount'),
+                        'provider_amount': provider_data.get('amount'),
+                        'internal_status': data.get('status'),
+                        'provider_status': provider_data.get('status')
                     }
                 else:
                     matched[ref] = data
