@@ -8,8 +8,6 @@ import csv
 
 
 
-def home(request):
-    return render(request, 'index.html')
 
 
 class reconciliation(APIView):
