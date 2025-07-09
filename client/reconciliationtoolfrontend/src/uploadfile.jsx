@@ -1,4 +1,4 @@
-import react , {useState}from "react"
+import React , {useState}from "react"
 import axios from 'axios'
 import ResultsTable from "./resultstable"
 
@@ -11,7 +11,8 @@ function Upload() {
 
 
     async function handleupload() {
-        const formData= new formData
+      
+        const formData= new FormData ()
 
         formData.append('internal_file', internalfile)
         formData.append('provider_file',providerfile)
@@ -25,8 +26,8 @@ function Upload() {
     <div>
             <h1> MY MINI RECONCILIATION TOOL</h1>
 
-            <input type = 'file' onChange = {(e) = setInternalfile(e.target.files[0]) }/>
-            <input type= 'file'  onChange={(e) =setProviderfile(e.target.files[0])}/>
+            <input type = 'file' onChange = {(e) => setInternalfile(e.target.files[0]) }/>
+            <input type= 'file'  onChange={(e) =>setProviderfile(e.target.files[0])}/>
 
 
             <button onClick={handleupload} >Reconcile</button>
