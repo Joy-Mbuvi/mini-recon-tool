@@ -1,6 +1,7 @@
-import React , {useState}from "react"
+import React , {useState,}from "react"
 import axios from 'axios'
 import ResultsTable from "./resultstable"
+import "./uploadfile.css"
 
 
 function Upload() {
@@ -23,8 +24,8 @@ function Upload() {
         
     }
  return(
-    <div>
-            <h1> MY MINI RECONCILIATION TOOL</h1>
+    <div className="button-group">
+            
 
             <input type = 'file' onChange = {(e) => setInternalfile(e.target.files[0]) }/>
             <input type= 'file'  onChange={(e) =>setProviderfile(e.target.files[0])}/>

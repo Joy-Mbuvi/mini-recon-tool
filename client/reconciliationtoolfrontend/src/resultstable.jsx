@@ -1,78 +1,70 @@
-import React from 'react'
+import React from 'react';
+import './resultstable.css';
 
-function ResultsTable({results}) {
+function ResultsTable({ results }) {
 
-    function Category(title, data,keys){
-        if (!data || Object.keys(data).length === 0)
-            return null
-        
-        return(
-            <div>
-                <h3>{title}</h3>
+  const fieldMap = {
+    'amount': 'Amount',
+    'status': 'Status',
+    'time_stamps': 'Timestamp',
+    'internal_amount': 'Internal Amount',
+    'provider_amount': 'Provider Amount',
+    'internal_status': 'Internal Status',
+    'provider_status': 'Provider Status'
+  };
 
-                <table>
-                    <thead>
-                        <tr> 
-                            {keys.map((key) => (
-                            <th key={key}>{key}</th>))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Object.entries(data).map( ([ref,item])=>(
-                            <tr key= {ref}>
-                                <td>{ref}</td>
-                                {keys.slice(1).map((key) => (
-                               <td key={key}>{item[key] ?? ''}</td>
-                                  ))}
-                            </tr>
-                            
-                        )
-                        )}
-                    </tbody>
-                </table>
-
-            </div>
-        )
-
-
+  function getCategoryKeys(title) {
+    switch (title) {
+      case 'Matched':
+      case 'Only in Provider':
+      case 'Only in Transaction':
+        return ['Ref', 'amount', 'status', 'time_stamps'];
+      case 'Mismatched':
+        return ['Ref', 'internal_amount', 'provider_amount', 'internal_status', 'provider_status'];
+      default:
+        return ['Ref'];
     }
+  }
 
-    return(
-        <div>
-            <Category
-            Title= 'Matched'
-            data= {results.matched}
-            keys= {['Ref','Amount','Status','Timestamp']}
+  function Category({ title, data }) {
+    if (!data || Object.keys(data).length === 0) return null;
 
-            />
+    const keys = getCategoryKeys(title);
 
-            <Category
-            Title='Mismatched'
-            data={results.mismatches}
-             keys= {['Ref','Amount','Status','Timestamp']}
+    return (
+      <div className="category">
+        <h3>{title}</h3>
+        <table className="results-table">
+          <thead>
+            <tr>
+              {keys.map((key) => (
+                <th key={key}>{fieldMap[key] || key}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(data).map(([ref, item]) => (
+              <tr key={ref}>
+                <td>{ref}</td>
+                {keys.slice(1).map((key) => (
+                  <td key={key}>{item[key] ?? ''}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 
-            
-            />
-
-            <Category
-            Title='Only in Provider'
-            data={results.only_provider}
-            keys= {['Ref','Amount','Status','Timestamp']}
-
-            />
-
-            <Category
-            Title='Only in Transcation'
-            data={results.only_transcation}
-             keys= {['Ref','Amount','Status','Timestamp']}
-            />
-
-
-        </div>
-    )
-    
+  return (
+    <div className="results-container">
+      <Category title="Matched" data={results.matched} />
+      <Category title="Mismatched" data={results.mismatches} />
+      <Category title="Only in Provider" data={results.only_provider} />
+      <Category title="Only in Transaction" data={results.only_internal} />
+    </div>
+  );
 }
 
-
-
-export default ResultsTable
+export default ResultsTable;
