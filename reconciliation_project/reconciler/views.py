@@ -5,10 +5,10 @@ from rest_framework import status
 from .serializers import Reconserializer
 from django.shortcuts import render
 import csv
+from django.shortcuts import render
 
-
-
-
+def home(request):
+    return render(request, 'index.html')
 
 class reconciliation(APIView):
     parser_classes = [MultiPartParser, FormParser]
