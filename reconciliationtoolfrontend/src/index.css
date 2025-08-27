@@ -1,6 +1,4 @@
-/* index.css */
 
-/* Reset default styles */
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +7,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f5d671; 
+  background-color: #0f3c65; 
   color: #000;
   display: flex;
   flex-direction: column;
@@ -23,8 +21,8 @@ body {
   max-width: 900px;
   width: 90%;
   padding: 40px;
-  background-color: #b1ddf1; 
-  border: 2px dashed #000; 
+  background-color:  #f47d81;; 
+  border: 2px dashed #fe4b11; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
