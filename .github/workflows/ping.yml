@@ -1,0 +1,16 @@
+name: ping Render backend
+
+on:
+  schedule:
+      
+      -cron: '*/10 * * * *'
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ping Render backend
+        run: |
+          curl -f https://backend-service-lr27.onrender.com || echo "ping failed"
+
+
