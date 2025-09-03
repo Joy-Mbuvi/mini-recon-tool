@@ -18,7 +18,9 @@ function Upload() {
         formData.append('internal_file', internalfile)
         formData.append('provider_file',providerfile)
 
-        const response= await axios.post(`http://localhost:8000/api/reconcile/`,formData);
+        const API_BASE_URL = process.env.REACT_APP_API_URL ||`http://localhost:8000`
+        
+        const response= await axios.post(`${API_BASE_URL}/api/reconcile/`,formData)
          setResults(response.data)
 
         
